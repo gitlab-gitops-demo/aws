@@ -13,7 +13,7 @@ module "eks" {
       instance_type = "m4.large"
       asg_max_size  = 2
       tags = [{
-        key                 = "Teraform"
+        key                 = "Terraform"
         value               = "true"
         propagate_at_launch = true
       }]
