@@ -1,0 +1,9 @@
+include:
+  - project: 'gitops-demo/infra/templates'
+    file: '/teraform.gitlabci.yml'
+
+variables:
+  PLAN: plan.tfplan
+  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}' 
+  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}' 
+  AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}'
