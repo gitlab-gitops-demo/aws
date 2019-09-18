@@ -1,6 +1,6 @@
 include:
   - project: 'gitops-demo/infra/templates'
-    file: '/teraform.gitlabci.yml'
+    file: '/teraform.gitlab-ci.yml'
 
 variables:
   PLAN: plan.tfplan
