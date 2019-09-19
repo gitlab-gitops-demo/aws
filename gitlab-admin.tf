@@ -67,6 +67,7 @@ locals {
 
   gitlab-config = <<EOT
 {"name":"${module.eks.cluster_id}",
+ "domain":"gitops-demo.com",
 "platform_kubernetes_attributes":
 {"api_url":"${module.eks.cluster_endpoint}",
 "token":"${data.kubernetes_secret.gitlab-admin-token.data.token}",
