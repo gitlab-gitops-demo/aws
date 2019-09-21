@@ -2,20 +2,17 @@ data "gitlab_group" "gitops-demo-apps" {
   full_path = "gitops-demo/apps"
 }
 
-# This is a hack until terraform provider supports group clusters
-# https://github.com/terraform-providers/terraform-provider-gitlab/issues/138
-resource "null_resource" "aws_cluster" {
-  # Changes to any instance of the cluster requires re-provisioning
-  triggers = {
-    cluster_instance_ids = "${base64decode(data.aws_eks_cluster.my-cluster.certificate_authority.0.data)}"
-  }
+provider "gitlab" {
+  alias   = "use-pre-release-plugin"
+  version = "v2.99.0"
+}
+resource "gitlab_group_cluster" "aws_cluster" {
+  provider           = "gitlab.use-pre-release-plugin"
+  group              = "${data.gitlab_group.gitops-demo-apps.id}"
+  name               = "${module.eks.cluster_id}"
+  domain             = "gitops-demo.com"
+  kubernetes_api_url = "${module.eks.cluster_endpoint}"
+  kubernetes_token   = "${data.kubernetes_secret.gitlab-admin-token.data.token}"
+  kubernetes_ca_cert = "${trimspace(base64decode(module.eks.cluster_certificate_authority_data))}"
 
-  provisioner "local-exec" {
-    command = <<EOT
-curl --silent --show-error --fail --header "Private-Token: $GITLAB_TOKEN" https://gitlab.com/api/v4/groups/${data.gitlab_group.gitops-demo-apps.id}/clusters/user \
--H "Accept: application/json" \
--H "Content-Type:application/json" \
--X POST --data '${local.gitlab-config}'
-EOT
-  }
 }
