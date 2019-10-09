@@ -11,7 +11,7 @@ module "eks" {
   worker_groups = [
     {
       instance_type = "m4.large"
-      asg_max_size  = 2
+      asg_max_size  = 5
       tags = [{
         key                 = "Terraform"
         value               = "true"
