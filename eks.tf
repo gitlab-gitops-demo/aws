@@ -1,7 +1,8 @@
 module "eks" {
-  source       = "terraform-aws-modules/eks/aws"
-  cluster_name = "gitops-demo-eks"
-  subnets      = "${module.vpc.public_subnets}"
+  source           = "terraform-aws-modules/eks/aws"
+  cluster_name     = "gitops-demo-eks"
+  subnets          = "${module.vpc.public_subnets}"
+  write_kubeconfig = "false"
   tags = {
     Terraform   = "true"
     Environment = "dev"
