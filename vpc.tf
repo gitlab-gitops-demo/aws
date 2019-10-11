@@ -13,11 +13,11 @@ module "vpc" {
   propagate_public_route_tables_vgw = true
 
   tags = {
-    Terraform                          = "true"
-    Environment                        = "dev"
-    "kubernetes.io/cluster/gitops-eks" = "shared"
+    Terraform                               = "true"
+    Environment                             = "dev"
+    "kubernetes.io/cluster/gitops-demo-eks" = "shared"
   }
   public_subnet_tags = {
-    "kubernetes.io/cluster/gitops-eks" = "shared"
+    "kubernetes.io/cluster/gitops-demo-eks" = "shared"
   }
 }
