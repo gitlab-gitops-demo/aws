@@ -8,9 +8,9 @@ data "aws_eks_cluster_auth" "my-auth" {
 
 provider "kubernetes" {
   version                = "~> 1.9"
-  host                   = "${data.aws_eks_cluster.my-cluster.endpoint}"
-  cluster_ca_certificate = "${base64decode(data.aws_eks_cluster.my-cluster.certificate_authority.0.data)}"
-  token                  = "${data.aws_eks_cluster_auth.my-auth.token}"
+  host                   = data.aws_eks_cluster.my-cluster.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.my-cluster.certificate_authority.0.data)
+  token                  = data.aws_eks_cluster_auth.my-auth.token
   load_config_file       = false
 }
 
@@ -31,7 +31,7 @@ resource "kubernetes_secret" "gitlab-admin" {
   }
   lifecycle {
     ignore_changes = [
-      "data"
+      data
     ]
   }
   type = "kubernetes.io/service-account-token"
