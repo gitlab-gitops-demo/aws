@@ -7,7 +7,7 @@ data "aws_eks_cluster_auth" "my-auth" {
 }
 
 provider "kubernetes" {
-  version                = "~> 1.9"
+  version                = "1.10.0"
   host                   = data.aws_eks_cluster.my-cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.my-cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.my-auth.token
