@@ -2,11 +2,28 @@ include:
   - project: 'gitops-demo/infra/templates'
     file: '/terraform.gitlab-ci.yml'
 
-before_script:
-  - apk add --update curl
-  - curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/kubectl
-  - install kubectl /usr/local/bin/ && rm kubectl
-  - curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator
-  - install aws-iam-authenticator /usr/local/bin/ && rm aws-iam-authenticator
-  - terraform --version
-  - terraform init
+managed-apps:
+  stage: deploy-apps
+  image: "registry.gitlab.com/gitlab-org/cluster-integration/cluster-applications:v0.8.0"
+  environment:
+    name: eks/production
+  variables:
+    TILLER_NAMESPACE: gitlab-managed-apps
+    GITLAB_MANAGED_APPS_FILE: $CI_PROJECT_DIR/.gitlab/managed-apps/config.yaml
+    INGRESS_VALUES_FILE: $CI_PROJECT_DIR/.gitlab/managed-apps/ingress/values.yaml
+    CERT_MANAGER_VALUES_FILE: $CI_PROJECT_DIR/.gitlab/managed-apps/cert-manager/values.yaml
+    SENTRY_VALUES_FILE: $CI_PROJECT_DIR/.gitlab/managed-apps/sentry/values.yaml
+    GITLAB_RUNNER_VALUES_FILE: $CI_PROJECT_DIR/.gitlab/managed-apps/gitlab-runner/values.yaml
+    CILIUM_VALUES_FILE: $CI_PROJECT_DIR/.gitlab/managed-apps/cilium/values.yaml
+    JUPYTERHUB_VALUES_FILE: $CI_PROJECT_DIR/.gitlab/managed-apps/jupyterhub/values.yaml
+    PROMETHEUS_VALUES_FILE: $CI_PROJECT_DIR/.gitlab/managed-apps/prometheus/values.yaml
+    ELASTIC_STACK_VALUES_FILE: $CI_PROJECT_DIR/.gitlab/managed-apps/elastic-stack/values.yaml
+  script:
+    - gitlab-managed-apps /usr/local/share/gitlab-managed-apps/helmfile.yaml
+  only:
+    refs:
+      - master
+  artifacts:
+    when: on_failure
+    paths:
+      - tiller.log
