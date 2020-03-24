@@ -21,3 +21,7 @@ module "eks" {
     }
   ]
 }
+
+output "env-dynamic-url" {
+  value = module.eks.cluster_endpoint
+}
