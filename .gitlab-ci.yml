@@ -12,6 +12,9 @@ tfsec:
   stage: plan
   before_script:
     - echo 0
-  script: tfsec .
+  script: tfsec . -f json | tee gl-sast-report.json
+  artifacts:
+    reports:
+      sast: gl-sast-report.json
   only:
     - merge_requests
