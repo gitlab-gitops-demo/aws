@@ -10,6 +10,7 @@ tfsec:
       - '/usr/bin/env'
       - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   stage: plan
+  before_script:
   script: tfsec .
   only:
     - merge_requests
