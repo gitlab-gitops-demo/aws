@@ -11,6 +11,7 @@ tfsec:
       - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   stage: plan
   before_script:
+    - echo 0
   script: tfsec .
   only:
     - merge_requests
