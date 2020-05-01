@@ -2,3 +2,10 @@ include:
   - project: 'gitops-demo/infra/templates'
     file: '/terraform.gitlab-ci.yml'
 
+
+tfsec:
+  image: wesleydeanflexion/tfsec
+  stage: plan
+  script: tfsec .
+  only:
+    - merge_requests
