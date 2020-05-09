@@ -1,5 +1,4 @@
 include:
   - project: 'gitops-demo/infra/templates'
     file: '/terraform.gitlab-ci.yml'
-    ref: clean-up-yaml
 
