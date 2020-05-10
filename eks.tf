@@ -20,7 +20,6 @@ module "eks" {
       }]
     }
   ]
-  wait_for_cluster_cmd = "until wget --no-check-certificate -O - -q $ENDPOINT/healthz >/dev/null; do sleep 30; done"
 }
 
 output "env-dynamic-url" {
