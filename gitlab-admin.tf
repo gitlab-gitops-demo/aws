@@ -18,6 +18,7 @@ resource "kubernetes_service_account" "gitlab-admin" {
     name      = "gitlab-admin"
     namespace = "kube-system"
   }
+  depends_on = [module.eks]
 }
 
 resource "kubernetes_secret" "gitlab-admin" {
