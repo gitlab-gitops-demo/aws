@@ -6,6 +6,15 @@ data "aws_eks_cluster_auth" "my-auth" {
   name = "${module.eks.cluster_id}"
 }
 
+resource "null_resource" "wait_for_cluster" {
+  provisioner "local-exec" {
+    command = "until wget --no-check-certificate -O - -q $ENDPOINT/apis/rbac.authorization.k8s.io/v1/clusterrolebindings >/dev/null; do sleep 4; done"
+    environment = {
+      ENDPOINT = data.aws_eks_cluster.my-cluster.endpoint
+    }
+  }
+}
+
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.my-cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.my-cluster.certificate_authority.0.data)
@@ -18,6 +27,7 @@ resource "kubernetes_service_account" "gitlab-admin" {
     name      = "gitlab-admin"
     namespace = "kube-system"
   }
+  depends_on = [null_resource.wait_for_cluster]
 }
 
 resource "kubernetes_secret" "gitlab-admin" {
