@@ -8,7 +8,7 @@ data "aws_eks_cluster_auth" "my-auth" {
 
 resource "null_resource" "wait_for_cluster" {
   provisioner "local-exec" {
-    command = "until wget --no-check-certificate -O - -q $ENDPOINT/apis/rbac.authorization.k8s.io/v1/clusterrolebindings >/dev/null; do sleep 4; done"
+    command = "until curl -k $ENDPOINT/apis/rbac.authorization.k8s.io/v1/clusterrolebindings >/dev/null; do sleep 4; done"
     environment = {
       ENDPOINT = data.aws_eks_cluster.my-cluster.endpoint
     }
