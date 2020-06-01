@@ -3,6 +3,7 @@ data "gitlab_group" "gitops-demo-apps" {
 }
 
 data "gitlab_projects" "cluster-management-search" {
+  # Returns a list of matching projects. limit to 1 result matching "cluster-management"
   group_id            = data.gitlab_group.gitops-demo-apps.id
   simple              = true
   search              = "cluster-management"
