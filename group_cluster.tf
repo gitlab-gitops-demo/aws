@@ -3,7 +3,7 @@ data "gitlab_group" "gitops-demo-apps" {
 }
 
 provider "gitlab" {
-  version = "2.99.0"
+  version = ">=2.9.0"
 }
 resource "gitlab_group_cluster" "aws_cluster" {
   group                 = data.gitlab_group.gitops-demo-apps.id
