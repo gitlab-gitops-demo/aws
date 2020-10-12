@@ -1,13 +1,14 @@
 module "eks" {
   source           = "terraform-aws-modules/eks/aws"
   cluster_name     = "gitops-demo-eks"
-  subnets          = "${module.vpc.public_subnets}"
+  cluster_version  = "1.17"
+  subnets          = module.vpc.public_subnets
   write_kubeconfig = "false"
   tags = {
     Terraform   = "true"
     Environment = "dev"
   }
-  vpc_id = "${module.vpc.vpc_id}"
+  vpc_id = module.vpc.vpc_id
 
   worker_groups = [
     {
