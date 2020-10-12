@@ -1,9 +1,9 @@
 data "aws_eks_cluster" "my-cluster" {
-  name = "${module.eks.cluster_id}"
+  name = module.eks.cluster_id
 }
 
 data "aws_eks_cluster_auth" "my-auth" {
-  name = "${module.eks.cluster_id}"
+  name = module.eks.cluster_id
 }
 
 provider "kubernetes" {
@@ -25,7 +25,7 @@ resource "kubernetes_secret" "gitlab-admin" {
     name      = "gitlab-admin"
     namespace = "kube-system"
     annotations = {
-      "kubernetes.io/service-account.name" = "${kubernetes_service_account.gitlab-admin.metadata.0.name}"
+      "kubernetes.io/service-account.name" = kubernetes_service_account.gitlab-admin.metadata.0.name
     }
   }
   lifecycle {
@@ -38,7 +38,7 @@ resource "kubernetes_secret" "gitlab-admin" {
 
 data "kubernetes_secret" "gitlab-admin-token" {
   metadata {
-    name      = "${kubernetes_service_account.gitlab-admin.default_secret_name}"
+    name      = kubernetes_service_account.gitlab-admin.default_secret_name
     namespace = "kube-system"
   }
 }

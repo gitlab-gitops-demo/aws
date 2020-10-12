@@ -4,7 +4,7 @@ terraform {
       source = "hashicorp/aws"
     }
     gitlab = {
-      source = "terraform-providers/gitlab"
+      source = "gitlabhq/gitlab"
     }
     kubernetes = {
       source = "hashicorp/kubernetes"
