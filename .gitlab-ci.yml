@@ -1,5 +1,3 @@
 include:
   - project: 'gitops-demo/infra/templates'
     file: '/terraform.gitlab-ci.yml'
-    ref: 62fd670ee46230140341efb67ae4e08c522500ed
-
