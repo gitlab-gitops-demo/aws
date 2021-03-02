@@ -1,5 +1,6 @@
 module "eks" {
   source           = "terraform-aws-modules/eks/aws"
+  version          = "14.0"
   cluster_name     = "gitops-demo-eks"
   cluster_version  = "1.17"
   subnets          = module.vpc.public_subnets
