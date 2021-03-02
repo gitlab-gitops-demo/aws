@@ -4,12 +4,11 @@ terraform {
       source = "hashicorp/aws"
     }
     gitlab = {
-      source  = "gitlabhq/gitlab"
-      version = ">=2.9.0"
+      source = "gitlabhq/gitlab"
     }
     kubernetes = {
       source = "hashicorp/kubernetes"
     }
   }
-  required_version = ">= 0.13"
+  required_version = ">= 0.14"
 }
