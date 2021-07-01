@@ -18,3 +18,14 @@ before_script:
   - export AWS_SECRET_ACCESS_KEY=$(cat $AWS_SECRET_ACCESS_KEY_FILE)
   - export AWS_REGION=$(cat $AWS_REGION_FILE)
   - export GITLAB_TOKEN=$(cat $GITLAB_TOKEN_FILE)
+
+
+kics-scan:
+  image: checkmarx/kics:latest-alpine
+  stage: validate
+  script:
+    - kics scan -q ./assets/queries -p ${PWD} --ignore-on-exit all --report-formats glsast -o ${PWD}/gl-sast-kics-results.glsast
+  artifacts:
+    reports:
+      sast: gl-sast-kics-results.json
+    when: always
