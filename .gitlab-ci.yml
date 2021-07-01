@@ -21,7 +21,10 @@ before_script:
 
 
 kics-scan:
-  image: checkmarx/kics:latest-alpine
+  image: 
+    name: checkmarx/kics:latest-alpine
+    entrypoint:
+      - '/usr/bin/env'
   stage: validate
   script:
     - kics scan -q ./assets/queries -p ${PWD} --ignore-on-exit all --report-formats glsast -o ${PWD}/gl-sast-kics-results.glsast
