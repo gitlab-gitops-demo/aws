@@ -27,8 +27,8 @@ kics-scan:
       - '/usr/bin/env'
   stage: validate
   script:
-    - kics scan -q /app/bin/assets/queries -p ${PWD} --ignore-on-exit all --report-formats glsast -o ${PWD}/gl-sast-kics-results.json
+    - kics scan -q /app/bin/assets/queries -p ${PWD} --ignore-on-exit all --report-formats glsast -o ${PWD}/gl-sast-results.json
   artifacts:
     reports:
-      sast: gl-sast-kics-results.json
+      sast: gl-sast-results.json
     when: always
