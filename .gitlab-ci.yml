@@ -12,7 +12,7 @@ include:
       file: false
     AWS_REGION:
       vault: infrastructure/aws/AWS_REGION@secret
-      file: flase
+      file: false
     GITLAB_TOKEN:
       vault: infrastructure/gitlab/GITLAB_TOKEN@secret
       file: false
