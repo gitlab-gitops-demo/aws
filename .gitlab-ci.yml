@@ -4,17 +4,16 @@ include:
 
 .secrets:
   secrets:
-    AWS_ACCESS_KEY_ID_FILE:
+    AWS_ACCESS_KEY_ID:
       vault: infrastructure/aws/AWS_ACCESS_KEY_ID@secret
-    AWS_SECRET_ACCESS_KEY_FILE:
+      file: false
+    AWS_SECRET_ACCESS_KEY:
       vault: infrastructure/aws/AWS_SECRET_ACCESS_KEY@secret
-    AWS_REGION_FILE:
+      file: false
+    AWS_REGION:
       vault: infrastructure/aws/AWS_REGION@secret
-    GITLAB_TOKEN_FILE:
+      file: flase
+    GITLAB_TOKEN:
       vault: infrastructure/gitlab/GITLAB_TOKEN@secret
+      file: false
 
-before_script:
-  - export AWS_ACCESS_KEY_ID=$(cat $AWS_ACCESS_KEY_ID_FILE)
-  - export AWS_SECRET_ACCESS_KEY=$(cat $AWS_SECRET_ACCESS_KEY_FILE)
-  - export AWS_REGION=$(cat $AWS_REGION_FILE)
-  - export GITLAB_TOKEN=$(cat $GITLAB_TOKEN_FILE)
