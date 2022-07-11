@@ -14,3 +14,37 @@ resource "gitlab_cluster_agent_token" "agent" {
   name        = "agent-token"
   description = "agent token"
 }
+
+data "aws_eks_cluster" "gitops-demo-eks" {
+  name = module.eks.cluster_id
+}
+
+data "aws_eks_cluster_auth" "gitops-demo-eks" {
+  name = module.eks.cluster_id
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = module.eks.cluster_endpoint
+    token                  = data.aws_eks_cluster_auth.gitops-demo-eks.token
+    cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+  }
+}
+
+resource "helm_release" "gitlab-agent" {
+  name = "gitlab-agent"
+
+  repository       = "https://charts.gitlab.io"
+  chart            = "gitlab-agent"
+  namespace        = "gitlab-agent"
+  create_namespace = true
+
+  set {
+    name  = "config.token"
+    value = gitlab_cluster_agent_token.agent.token
+  }
+  set {
+    name  = "config.kasAddress"
+    value = "wss://kas.gitlab.com"
+  }
+}

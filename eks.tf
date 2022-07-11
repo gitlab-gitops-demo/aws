@@ -9,15 +9,19 @@ module "eks" {
   }
   vpc_id = module.vpc.vpc_id
 
-  self_managed_node_groups = {
-    gitops-eks-node = {
-      instance_type = "m4.large"
-      asg_max_size  = 5
-      tags = {
-        key                 = "Terraform"
-        value               = "true"
-        propagate_at_launch = true
-      }
+  eks_managed_node_group_defaults = {
+    disk_size      = 50
+    instance_types = ["m6i.large", "m5.large", "m5n.large", "m5zn.large"]
+  }
+
+  eks_managed_node_groups = {
+    green = {
+      min_size     = 1
+      max_size     = 10
+      desired_size = 1
+
+      instance_types = ["t3.large"]
+      capacity_type  = "SPOT"
     }
   }
 }
