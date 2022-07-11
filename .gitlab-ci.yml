@@ -2,9 +2,6 @@ include:
   - project: 'gitops-demo/infra/templates'
     file: '/terraform.gitlab-ci.yml'
 
-variables:
-  TF_STATE_NAME: default
-
 .secrets:
   secrets:
     AWS_ACCESS_KEY_ID:
