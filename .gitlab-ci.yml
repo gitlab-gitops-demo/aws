@@ -17,3 +17,8 @@ include:
       vault: infrastructure/gitlab/GITLAB_TOKEN@secret
       file: false
 
+build:
+  extends: [.secrets, .terraform:build]
+
+deploy:
+  extends: [.secrets, .terraform:deploy]
