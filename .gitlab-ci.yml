@@ -1,7 +1,6 @@
 include:
   - project: 'gitops-demo/infra/templates'
     file: '/terraform.gitlab-ci.yml'
-    ref: 8-template-gitlab-kubernetes-agent
 
 .secrets:
   secrets:
