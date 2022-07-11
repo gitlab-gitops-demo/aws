@@ -1,6 +1,6 @@
 variable "CI_PROJECT_ID" {
-    type: string
-    description: "GitLab Project ID"
+  type        = string
+  description = "GitLab Project ID"
 }
 
 resource "gitlab_cluster_agent" "agent" {
