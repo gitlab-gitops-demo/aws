@@ -1,11 +1,11 @@
-variable "CI_PROJECT_ID" {
-  type        = string
-  description = "GitLab Project ID"
+variable "GITOPS_AGENT_PROJECTID" {
+   type        = string
+   description = "Project ID Number where the gitops-agent lives. Should be in the same group as apps"
 }
 
 resource "gitlab_cluster_agent" "agent" {
-  project = var.CI_PROJECT_ID
-  name    = "agent"
+  project = var.GITOPS_AGENT_PROJECTID
+  name    = "agent" # This name maps to the file .gitlab/agents/{name}/config.yaml
 }
 
 resource "gitlab_cluster_agent_token" "agent" {
