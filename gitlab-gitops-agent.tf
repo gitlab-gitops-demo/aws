@@ -1,6 +1,6 @@
 variable "GITOPS_AGENT_PROJECTID" {
-   type        = string
-   description = "Project ID Number where the gitops-agent lives. Should be in the same group as apps"
+  type        = string
+  description = "Project ID Number where the gitops-agent lives. Should be in the same group as apps"
 }
 
 resource "gitlab_cluster_agent" "agent" {
