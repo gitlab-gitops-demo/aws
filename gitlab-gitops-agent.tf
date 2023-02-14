@@ -5,7 +5,7 @@ variable "GITOPS_AGENT_PROJECTID" {
 
 resource "gitlab_cluster_agent" "agent" {
   project = var.GITOPS_AGENT_PROJECTID
-  name    = "agent" # This name maps to the file .gitlab/agents/{name}/config.yaml
+  name    = "aws" # This name maps to the file .gitlab/agents/{name}/config.yaml
 }
 
 resource "gitlab_cluster_agent_token" "agent" {
@@ -38,6 +38,7 @@ resource "helm_release" "gitlab-agent" {
   chart            = "gitlab-agent"
   namespace        = "gitlab-agent"
   create_namespace = true
+  force_update     = true
 
   set {
     name  = "config.token"
