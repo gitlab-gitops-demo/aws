@@ -1,9 +1,9 @@
 module "eks" {
-  source          = "terraform-aws-modules/eks/aws"
-  cluster_name    = "gitops-demo-eks"
-  cluster_version = "1.23"
+  source                         = "terraform-aws-modules/eks/aws"
+  cluster_name                   = "gitops-demo-eks"
+  cluster_version                = "1.23"
   cluster_endpoint_public_access = true
-  subnet_ids      = module.vpc.public_subnets
+  subnet_ids                     = module.vpc.public_subnets
   tags = {
     Terraform   = "true"
     Environment = "dev"
