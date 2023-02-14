@@ -16,11 +16,11 @@ resource "gitlab_cluster_agent_token" "agent" {
 }
 
 data "aws_eks_cluster" "gitops-demo-eks" {
-  name = module.eks.cluster_id
+  name = module.eks.cluster_name
 }
 
 data "aws_eks_cluster_auth" "gitops-demo-eks" {
-  name = module.eks.cluster_id
+  name = module.eks.cluster_name
 }
 
 provider "helm" {
