@@ -45,3 +45,27 @@ resource "helm_release" "gitlab-agent" {
     value = "wss://kas.gitlab.com"
   }
 }
+
+resource "helm_release" "managed-apps-ingress" {
+  name    = "ingress-nginx"
+  version = "4.5.2"
+
+  repository       = "https://kubernetes.github.io/ingress-nginx"
+  chart            = "ingress-nginx"
+  namespace        = "gitlab-managed-apps"
+  create_namespace = true
+  force_update     = true
+
+  set {
+    name  = "controller.stats.enabled"
+    value = true
+  }
+  set {
+    name  = "controller.podAnnotations.prometheus.io/scrape"
+    value = "true"
+  }
+  set {
+    name  = "controller.podAnnotations.prometheus.io/port"
+    value = "10254"
+  }
+}
