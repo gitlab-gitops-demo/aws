@@ -69,3 +69,18 @@ resource "helm_release" "managed-apps-ingress" {
     value = "10254"
   }
 }
+
+resource "helm_release" "managed-apps-certmgr" {
+  name = "cert-manager"
+
+  repository       = "https://charts.jetstack.io"
+  chart            = "cert-manager"
+  namespace        = "gitlab-managed-apps"
+  create_namespace = true
+  force_update     = true
+
+  set {
+    name  = "installCRDs"
+    value = true
+  }
+}

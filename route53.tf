@@ -21,10 +21,6 @@ data "kubernetes_service" "nginx" {
   }
 }
 
-output "ingress-ouput" {
-  value = data.kubernetes_service.nginx.status.0.load_balancer.0.ingress.0.hostname
-}
-
 resource "aws_route53_record" "ingress_nginx" {
   zone_id         = var.ROUTE53_ZONE_ID
   name            = var.ROUTE53_LB_NAME
@@ -32,4 +28,8 @@ resource "aws_route53_record" "ingress_nginx" {
   ttl             = 300
   records         = [data.kubernetes_service.nginx.status.0.load_balancer.0.ingress.0.hostname]
   allow_overwrite = true
+}
+
+output "ingress-lb-hostname" {
+  value = data.kubernetes_service.nginx.status.0.load_balancer.0.ingress.0.hostname
 }
