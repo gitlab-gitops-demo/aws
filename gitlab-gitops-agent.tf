@@ -45,3 +45,42 @@ resource "helm_release" "gitlab-agent" {
     value = "wss://kas.gitlab.com"
   }
 }
+
+resource "helm_release" "managed_apps_ingress" {
+  name    = "ingress-nginx"
+  version = "4.5.2"
+
+  repository       = "https://kubernetes.github.io/ingress-nginx"
+  chart            = "ingress-nginx"
+  namespace        = "gitlab-managed-apps"
+  create_namespace = true
+  force_update     = true
+
+  set {
+    name  = "controller.stats.enabled"
+    value = true
+  }
+  set {
+    name  = "controller.podAnnotations.prometheus.io/scrape"
+    value = "true"
+  }
+  set {
+    name  = "controller.podAnnotations.prometheus.io/port"
+    value = "10254"
+  }
+}
+
+resource "helm_release" "managed_apps_certmgr" {
+  name = "cert-manager"
+
+  repository       = "https://charts.jetstack.io"
+  chart            = "cert-manager"
+  namespace        = "gitlab-managed-apps"
+  create_namespace = true
+  force_update     = true
+
+  set {
+    name  = "installCRDs"
+    value = true
+  }
+}
