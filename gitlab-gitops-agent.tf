@@ -46,7 +46,7 @@ resource "helm_release" "gitlab-agent" {
   }
 }
 
-resource "helm_release" "managed-apps-ingress" {
+resource "helm_release" "managed_apps_ingress" {
   name    = "ingress-nginx"
   version = "4.5.2"
 
@@ -70,7 +70,7 @@ resource "helm_release" "managed-apps-ingress" {
   }
 }
 
-resource "helm_release" "managed-apps-certmgr" {
+resource "helm_release" "managed_apps_certmgr" {
   name = "cert-manager"
 
   repository       = "https://charts.jetstack.io"

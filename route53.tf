@@ -1,9 +1,11 @@
 variable "ROUTE53_ZONE_ID" {
   description = "AWS Route 53 Zone ID"
+  type        = string
 }
 
 variable "ROUTE53_LB_NAME" {
   description = "* Record to be used for Ingress"
+  type        = string
   default     = "*.eks"
 }
 
@@ -14,10 +16,10 @@ provider "kubernetes" {
 }
 
 data "kubernetes_service" "nginx" {
-  depends_on = [helm_release.managed-apps-ingress]
+  depends_on = [helm_release.managed_apps_ingress]
   metadata {
-    name      = "${helm_release.managed-apps-ingress.name}-controller"
-    namespace = helm_release.managed-apps-ingress.namespace
+    name      = "${helm_release.managed_apps_ingress.name}-controller"
+    namespace = helm_release.managed_apps_ingress.namespace
   }
 }
 
@@ -31,5 +33,6 @@ resource "aws_route53_record" "ingress_nginx" {
 }
 
 output "ingress-lb-hostname" {
-  value = data.kubernetes_service.nginx.status.0.load_balancer.0.ingress.0.hostname
+  description = "ELB Hostname to ingress"
+  value       = data.kubernetes_service.nginx.status.0.load_balancer.0.ingress.0.hostname
 }
