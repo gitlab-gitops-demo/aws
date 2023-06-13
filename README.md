@@ -7,5 +7,6 @@ See [Global Readme file](https://gitlab.com/gitops-demo/readme/-/blob/master/REA
 ├── backend.tf              # State file Location Configuration
 ├── eks.tf                  # Amazon EKS Configuration
 ├── gitlab-gitops-agent.tf  # Adding GitLab kubernetes agent to cluster.
+├── route53.tf              # Update wildcard DNS in Route53 (optional)
 └── vpc.tf                  # AWS VPC Configuration
 ```
