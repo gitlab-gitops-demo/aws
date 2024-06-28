@@ -5,7 +5,7 @@ include:
 
 .secrets:
   id_tokens:
-      GITOPS_DEMO_VAULT_JWT:
+      VAULT_ID_TOKEN:
         aud: "GITOPS-DEMO"
   secrets:
     AWS_ACCESS_KEY_ID:
