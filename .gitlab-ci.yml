@@ -1,6 +1,5 @@
 include:
   - project: 'gitops-demo/infra/templates'
-    ref: 9-move-to-open-tofu 
     file: '/terraform.gitlab-ci.yml'
 
 .secrets:
