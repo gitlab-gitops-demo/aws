@@ -3,6 +3,11 @@ include:
     ref: 9-move-to-open-tofu 
     file: '/terraform.gitlab-ci.yml'
 
+default:
+  id_tokens:
+      GITOPS_DEMO_VAULT_JWT:
+        aud: "GITOPS-DEMO"
+
 .secrets:
   secrets:
     AWS_ACCESS_KEY_ID:
@@ -18,3 +23,11 @@ include:
       vault: infrastructure/gitlab/GITLAB_TOKEN@secret
       file: false
 
+plan: 
+  extends: [.secrets]
+
+apply:
+  extends: [.secrets]
+
+destroy:
+  extends: [.secrets]
