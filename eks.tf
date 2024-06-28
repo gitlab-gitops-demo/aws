@@ -1,9 +1,10 @@
 module "eks" {
-  source                         = "terraform-aws-modules/eks/aws"
-  cluster_name                   = "gitops-demo-eks"
-  cluster_version                = "1.26" # https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html#kubernetes-release-calendar
-  cluster_endpoint_public_access = true
-  subnet_ids                     = module.vpc.public_subnets
+  source                                   = "terraform-aws-modules/eks/aws"
+  cluster_name                             = "gitops-demo-eks"
+  cluster_version                          = "1.30" # https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html#kubernetes-release-calendar
+  cluster_endpoint_public_access           = true
+  enable_cluster_creator_admin_permissions = true
+  subnet_ids                               = module.vpc.public_subnets
   tags = {
     Terraform   = "true"
     Environment = "dev"
@@ -25,6 +26,10 @@ module "eks" {
       #capacity_type  = "SPOT"
     }
   }
+}
+
+data "aws_eks_cluster_auth" "gitops-demo-eks" {
+  name = module.eks.cluster_name
 }
 
 output "env-dynamic-url" {

@@ -15,10 +15,6 @@ resource "gitlab_cluster_agent_token" "agent" {
   description = "agent token"
 }
 
-data "aws_eks_cluster_auth" "gitops-demo-eks" {
-  name = module.eks.cluster_name
-}
-
 provider "helm" {
   kubernetes {
     host                   = module.eks.cluster_endpoint
@@ -48,7 +44,7 @@ resource "helm_release" "gitlab-agent" {
 
 resource "helm_release" "managed_apps_ingress" {
   name    = "ingress-nginx"
-  version = "4.5.2"
+  version = "4.10.1"
 
   repository       = "https://kubernetes.github.io/ingress-nginx"
   chart            = "ingress-nginx"
@@ -67,20 +63,5 @@ resource "helm_release" "managed_apps_ingress" {
   set {
     name  = "controller.podAnnotations.prometheus.io/port"
     value = "10254"
-  }
-}
-
-resource "helm_release" "managed_apps_certmgr" {
-  name = "cert-manager"
-
-  repository       = "https://charts.jetstack.io"
-  chart            = "cert-manager"
-  namespace        = "gitlab-managed-apps"
-  create_namespace = true
-  force_update     = true
-
-  set {
-    name  = "installCRDs"
-    value = true
   }
 }
